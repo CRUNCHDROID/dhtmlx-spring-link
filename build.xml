@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dhtmlx-spring-link" default="jar" basedir=".">
+    <property file="build.properties"/>
+
+    <path id="project.classpath">
+        <fileset dir="${spring.home.dir}/dist">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${gae.sdk.home.dir}/lib/impl">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${gae.sdk.home.dir}/lib/shared">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${hibernate.validator.home.dir}/">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${junit.home.dir}/">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean" description="Cleans build">
+        <delete dir="${build.dir}" failonerror="false"/>
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="clean" description="Compiles source">
+        <javac classpathref="project.classpath" fork="yes" destdir="${build.dir}" srcdir="${src.dir}/java"/>
+    </target>
+
+    <target name="test" depends="compile" description="Execute Test">
+        <junit printsummary="yes" haltonfailure="yes" fork="yes">
+            <classpath>
+                <fileset dir="${spring.home.dir}/dist">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${gae.sdk.home.dir}/lib/impl">
+                    <include name="appengine-api.jar"/>
+                </fileset>
+                <fileset dir="${gae.sdk.home.dir}/lib/shared">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${hibernate.validator.home.dir}/">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <pathelement location="${build.dir}"/>
+                <pathelement location="${junit.home.dir}/junit4.11-SNAPSHOT/unit4.11-SNAPSHOT.jar"/>
+            </classpath>
+            <test name="com.mylaensys.dhtmlx.adapter.test.TestGrid"/>
+        </junit>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar jarfile="${build.dir}/dhtmlx-spring-link-${lib.version}.jar">
+            <fileset dir="${build.dir}" includes="**/*"/>
+        </jar>
+    </target>
+
+</project>

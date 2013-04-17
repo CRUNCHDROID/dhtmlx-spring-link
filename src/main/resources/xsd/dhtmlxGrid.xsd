@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="rows">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="head" />
+				<xs:element ref="row" maxOccurs="unbounded" />
+				<xs:element ref="userdata" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="total_count" />
+			<xs:attribute name="pos" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="head">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="beforeInit" type="initElm" minOccurs="0" />
+				<xs:element name="afterInit" type="initElm" minOccurs="0" />
+				<xs:element ref="column" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="settings" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="column">
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="option" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="width" />
+			<xs:attribute ref="type" />
+			<xs:attribute name="align" />
+			<xs:attribute name="color" />
+			<xs:attribute name="sort" />
+			<xs:attribute name="format" />
+			<xs:attribute name="id" />
+			<xs:attribute name="hidden" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="option">
+		<xs:complexType>
+			<xs:attribute name="value" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="row">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="userdata" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="cell" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id"></xs:attribute>
+			<xs:attribute name="style"></xs:attribute>
+			<xs:attribute name="class" />
+			<xs:attribute name="bgColor" />
+			<xs:attribute name="locked" />
+			<xs:attribute name="selected" />
+			<xs:attribute name="call" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="call">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="param" />
+			</xs:sequence>
+			<xs:attribute name="command" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="param" />
+	<xs:complexType name="initElm">
+		<xs:sequence>
+			<xs:element ref="call" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="colwidth" />
+				<xs:element name="splitat" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="userdata">
+		<xs:complexType>
+			<xs:attribute name="name" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cell">
+		<xs:complexType>
+			<xs:attribute name="class"/>
+			<xs:attribute name="style" />
+			<xs:attribute ref="type" />
+			<xs:attribute name="xmlcontent" type="xs:string" />
+			<xs:attribute name="colspan" type="xs:string" />
+			<xs:attribute name="rowspan" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:attribute name="type">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ro" />
+				<xs:enumeration value="ed" />
+				<xs:enumeration value="txt" />
+				<xs:enumeration value="ch" />
+				<xs:enumeration value="ra" />
+				<xs:enumeration value="coro" />
+				<xs:enumeration value="co" />
+				<xs:enumeration value="img" />
+				<xs:enumeration value="cp" />
+				<xs:enumeration value="price" />
+				<xs:enumeration value="dyn" />
+				<xs:enumeration value="edn" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+</xs:schema>
